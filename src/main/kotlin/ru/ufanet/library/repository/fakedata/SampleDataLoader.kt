@@ -3,6 +3,7 @@ package ru.ufanet.library.repository.fakedata
 import com.github.javafaker.Faker
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
+import ru.ufanet.library.controller.GenreController
 import ru.ufanet.library.domain.Author
 import ru.ufanet.library.domain.Book
 import ru.ufanet.library.domain.CorpUser
@@ -13,6 +14,7 @@ import ru.ufanet.library.repository.AuthorRepository
 import ru.ufanet.library.repository.BookRepository
 import ru.ufanet.library.repository.GenreRepository
 import ru.ufanet.library.repository.UserRepository
+import ru.ufanet.library.service.GenreService
 import java.lang.Math.random
 import java.util.stream.IntStream
 import kotlin.streams.toList
@@ -32,16 +34,19 @@ class SampleDataLoader(
             it.toLong(), faker.name().lastName(), faker.name().firstName(), faker.name().title(), "") }.toList()
         authorRepository.saveAll(authors)
 
+        val genres =  IntStream.rangeClosed(1, 100).mapToObj { it -> Genre(
+            it.toLong(), faker.book().genre()) }.toList()
+        genreRepository.saveAll(genres)
+
         val books = IntStream.rangeClosed(1, 100).mapToObj { it -> Book(
-            it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), null, faker.date().birthday(), BookType.AUDIO_BOOK, random().toLong(), "www") }.toList()
+            it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), genres[2],
+            authors[random().toInt()], faker.date().birthday(), BookType.AUDIO_BOOK, random().toLong(), "www") }.toList()
         bookRepository.saveAll(books)
 
         val users = IntStream.rangeClosed(1, 100).mapToObj { it -> CorpUser(
             it.toLong(), faker.name().firstName(), faker.name().lastName(), faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username()) }.toList()
         userRepository.saveAll(users)
 
-        val genres =  IntStream.rangeClosed(1, 100).mapToObj { it -> Genre(
-            it.toLong(), faker.book().genre()) }.toList()
-        genreRepository.saveAll(genres)
+
     }
 }

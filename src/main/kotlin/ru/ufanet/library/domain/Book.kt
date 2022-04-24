@@ -18,9 +18,10 @@ data class Book(
     open var title: String? = "тут ноль",
     open var description: String? = "",
     open var quantity: Int? = 0,
-    @ManyToOne
-    @JoinColumn
-    open var genre: Genre? =Genre(),
+    @OneToOne(fetch = FetchType.LAZY)
+    open var genre: Genre,
+    @OneToOne(fetch = FetchType.LAZY)
+    open var author: Author,
     open var addDate: Date? = Date(),
     open var type: BookType? = BookType.PHYSICAL_BOOK,
     open var libId: Long?,

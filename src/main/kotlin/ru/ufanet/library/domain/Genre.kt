@@ -1,6 +1,7 @@
 package ru.ufanet.library.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import ru.ufanet.library.repository.GenreRepository
 import javax.persistence.*
 
 @Entity
@@ -10,5 +11,7 @@ data class Genre(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    val name: String = ""
+    val name: String = "",
+
 )
+
