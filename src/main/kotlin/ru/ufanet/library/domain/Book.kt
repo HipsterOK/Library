@@ -1,7 +1,12 @@
 package ru.ufanet.library.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import ru.ufanet.library.controller.GenreController
 import ru.ufanet.library.domain.enum.BookType
+import ru.ufanet.library.repository.GenreRepository
+import ru.ufanet.library.service.GenreService
+import java.text.SimpleDateFormat
+import java.util.Date
 import javax.persistence.*
 
 @Entity
@@ -11,6 +16,13 @@ data class Book(
     @GeneratedValue(strategy = GenerationType.AUTO)
     open var id: Long? = 0,
     open var title: String? = "тут ноль",
+    open var description: String? = "",
     open var quantity: Int? = 0,
-    open var type: BookType? = BookType.PHYSICAL_BOOK
+    @ManyToOne
+    @JoinColumn
+    open var genre: Genre? =Genre(),
+    open var addDate: Date? = Date(),
+    open var type: BookType? = BookType.PHYSICAL_BOOK,
+    open var libId: Long?,
+    open var src: String? =""
 )
