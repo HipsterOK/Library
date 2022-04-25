@@ -5,6 +5,7 @@
       <tr>
         <th scope="col">id</th>
         <th scope="col">Жанр</th>
+        <th scope="col">Управление</th>
 
       </tr>
       </thead>

@@ -1,22 +1,23 @@
 <template>
   <div>
-    <table class="table table-striped" v-if="authors && authors.length">
+    <table class="table table-striped" v-if="authorships && authorships.length">
       <thead class="table-dark">
       <tr>
         <th scope="col">id</th>
         <th scope="col">Книга</th>
         <th scope="col">Автор</th>
+        <th scope="col">Управление</th>
 
       </tr>
       </thead>
       <tbody>
       <tr v-for="authorship of authorships" :key="authorship">
         <td>{{ authorship.id }}</td>
-        <td>{{ authorship.book }}</td>
-        <td>{{ authorship.author }}</td>
+        <td>{{ authorship.bookId.title }}</td>
+        <td>{{ authorship.authorId.name }}</td>
         <td>
-          <button class="btn btn-secondary" style="margin-right:10px;" @click="editAuthor(author)">Изм.</button>
-          <button class="btn btn-danger" @click="removeAuthor(author)">Удалить</button>
+          <button class="btn btn-secondary" style="margin-right:10px;" @click="editAuthorship(authorship)">Изм.</button>
+          <button class="btn btn-danger" @click="removeAuthorship(authorship)">Удалить</button>
         </td>
       </tr>
       </tbody>

@@ -3,9 +3,9 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/book">Книги</router-link> |
     <router-link to="/author">Авторы</router-link> |
-    <router-link to="/user">Пользователи</router-link>
-    <router-link to="/genre">Жанры</router-link>
-    <router-link to="/authorship">Авторство</router-link>
+    <router-link to="/user">Пользователи</router-link> |
+    <router-link to="/genre">Жанры</router-link> |
+    <router-link to="/authorship">Авторство</router-link> |
   </nav>
   <router-view/>
 </template>
