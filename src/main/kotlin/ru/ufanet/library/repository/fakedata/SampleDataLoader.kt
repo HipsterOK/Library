@@ -23,7 +23,8 @@ class SampleDataLoader(
     private val readBookRepository: ReadBookRepository,
     private val reservationRepository: ReservationRepository,
     private val issuanceRepository: IssuanceRepository,
-    private val queueRepository: QueueRepository
+    private val queueRepository: QueueRepository,
+    private val libraryOfficeRepository: LibraryOfficeRepository
 ): CommandLineRunner {
 
     var faker: Faker = Faker()
@@ -65,5 +66,9 @@ class SampleDataLoader(
         val queues = IntStream.rangeClosed(1, 100).mapToObj { it -> Queue(
             it.toLong(),   users[it-1], books[it-1], faker.date().birthday()) }.toList()
         queueRepository.saveAll(queues)
+
+        val libraryOffices =  IntStream.rangeClosed(1, 100).mapToObj { it -> LibraryOffice(
+            it.toLong(), faker.name().title(), faker.address().fullAddress()) }.toList()
+        libraryOfficeRepository.saveAll(libraryOffices)
     }
 }
