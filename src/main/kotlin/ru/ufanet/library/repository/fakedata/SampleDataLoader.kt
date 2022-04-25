@@ -38,9 +38,13 @@ class SampleDataLoader(
             it.toLong(), faker.book().genre()) }.toList()
         genreRepository.saveAll(genres)
 
+        val libraryOffices =  IntStream.rangeClosed(1, 100).mapToObj { it -> LibraryOffice(
+            it.toLong(), faker.name().title(), faker.address().fullAddress()) }.toList()
+        libraryOfficeRepository.saveAll(libraryOffices)
+
         val books = IntStream.rangeClosed(1, 100).mapToObj { it -> Book(
             it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), genres[it-1],
-             faker.date().birthday(), BookType.AUDIO_BOOK, random().toLong(), "www") }.toList()
+             faker.date().birthday(), BookType.AUDIO_BOOK, libraryOffices[it-1], "www") }.toList()
         bookRepository.saveAll(books)
 
         val authorships = IntStream.rangeClosed(1, 100).mapToObj { it -> Authorship(
@@ -67,8 +71,6 @@ class SampleDataLoader(
             it.toLong(),   users[it-1], books[it-1], faker.date().birthday()) }.toList()
         queueRepository.saveAll(queues)
 
-        val libraryOffices =  IntStream.rangeClosed(1, 100).mapToObj { it -> LibraryOffice(
-            it.toLong(), faker.name().title(), faker.address().fullAddress()) }.toList()
-        libraryOfficeRepository.saveAll(libraryOffices)
+
     }
 }

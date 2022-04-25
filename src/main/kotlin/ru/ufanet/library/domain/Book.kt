@@ -24,6 +24,7 @@ data class Book(
 //    open var authorship: Authorship,
     open var addDate: Date? = Date(),
     open var type: BookType? = BookType.PHYSICAL_BOOK,
-    open var libId: Long?,
+    @OneToOne(fetch = FetchType.LAZY)
+    open var libId: LibraryOffice,
     open var src: String? =""
 )
