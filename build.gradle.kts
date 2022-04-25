@@ -32,6 +32,7 @@ dependencies {
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.apache.httpcomponents:httpclient")
+	implementation ("org.telegram:telegrambots-spring-boot-starter:6.0.1")
 
 	implementation("com.github.javafaker:javafaker:1.0.2")
 	runtimeOnly("org.postgresql:postgresql")

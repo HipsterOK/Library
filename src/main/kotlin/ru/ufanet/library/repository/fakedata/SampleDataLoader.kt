@@ -52,7 +52,7 @@ class SampleDataLoader(
         authorshipRepository.saveAll(authorships)
 
         val users = IntStream.rangeClosed(1, 100).mapToObj { it -> CorpUser(
-            it.toLong(), faker.name().firstName(), faker.name().lastName(), faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username()) }.toList()
+            it.toLong(), faker.name().firstName(), faker.name().lastName(), faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username(), faker.name().nameWithMiddle()) }.toList()
         userRepository.saveAll(users)
 
         val readBooks = IntStream.rangeClosed(1, 100).mapToObj { it -> ReadBook(
@@ -68,7 +68,7 @@ class SampleDataLoader(
         issuanceRepository.saveAll(issuances)
 
         val queues = IntStream.rangeClosed(1, 100).mapToObj { it -> Queue(
-            it.toLong(),   users[it-1], books[it-1], faker.date().birthday()) }.toList()
+            it.toLong(),   users[it-1], books[it-1], faker.date().birthday(), it) }.toList()
         queueRepository.saveAll(queues)
 
 

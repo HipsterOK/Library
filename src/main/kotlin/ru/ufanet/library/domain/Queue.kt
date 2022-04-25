@@ -14,6 +14,7 @@ data class Queue(
     val userId: CorpUser,
     @OneToOne(fetch = FetchType.LAZY)
     val bookId: Book,
-    val startDate:Date
+    val startDate:Date,
+    val position: Int
 )
 

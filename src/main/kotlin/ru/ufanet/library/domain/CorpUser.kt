@@ -18,5 +18,6 @@ data class CorpUser(
     val patronymic: String = "",
     val role: UserRole = UserRole.ADMIN,
     val login: String = "",
-    val password: String = ""
+    val password: String = "",
+    val tg: String=""
 )
