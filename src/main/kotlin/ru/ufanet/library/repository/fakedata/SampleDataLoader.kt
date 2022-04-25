@@ -20,7 +20,8 @@ class SampleDataLoader(
     private val userRepository: UserRepository,
     private val genreRepository: GenreRepository,
     private val authorshipRepository: AuthorshipRepository,
-    private val readBookRepository: ReadBookRepository
+    private val readBookRepository: ReadBookRepository,
+    private val reservationRepository: ReservationRepository
 ): CommandLineRunner {
 
     var faker: Faker = Faker()
@@ -50,5 +51,9 @@ class SampleDataLoader(
         val readBooks = IntStream.rangeClosed(1, 100).mapToObj { it -> ReadBook(
             it.toLong(), books[it-1],  users[it-1]) }.toList()
         readBookRepository.saveAll(readBooks)
+
+        val reservations = IntStream.rangeClosed(1, 100).mapToObj { it -> Reservation(
+            it.toLong(), books[it-1],  users[it-1], faker.date().birthday()) }.toList()
+        reservationRepository.saveAll(reservations)
     }
 }
