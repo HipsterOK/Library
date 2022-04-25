@@ -4,16 +4,10 @@ import com.github.javafaker.Faker
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import ru.ufanet.library.controller.GenreController
-import ru.ufanet.library.domain.Author
-import ru.ufanet.library.domain.Book
-import ru.ufanet.library.domain.CorpUser
-import ru.ufanet.library.domain.Genre
+import ru.ufanet.library.domain.*
 import ru.ufanet.library.domain.enum.BookType
 import ru.ufanet.library.domain.enum.UserRole
-import ru.ufanet.library.repository.AuthorRepository
-import ru.ufanet.library.repository.BookRepository
-import ru.ufanet.library.repository.GenreRepository
-import ru.ufanet.library.repository.UserRepository
+import ru.ufanet.library.repository.*
 import ru.ufanet.library.service.GenreService
 import java.lang.Math.random
 import java.util.stream.IntStream
@@ -24,7 +18,8 @@ class SampleDataLoader(
     private val authorRepository: AuthorRepository,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
-    private val genreRepository: GenreRepository
+    private val genreRepository: GenreRepository,
+    private val authorshipRepository: AuthorshipRepository
 ): CommandLineRunner {
 
     var faker: Faker = Faker()
@@ -39,9 +34,13 @@ class SampleDataLoader(
         genreRepository.saveAll(genres)
 
         val books = IntStream.rangeClosed(1, 100).mapToObj { it -> Book(
-            it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), genres[2],
-            authors[random().toInt()], faker.date().birthday(), BookType.AUDIO_BOOK, random().toLong(), "www") }.toList()
+            it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), genres[it-1],
+             faker.date().birthday(), BookType.AUDIO_BOOK, random().toLong(), "www") }.toList()
         bookRepository.saveAll(books)
+
+        val authorships = IntStream.rangeClosed(1, 100).mapToObj { it -> Authorship(
+            it.toLong(), books[it-1],  authors[it-1]) }.toList()
+        authorshipRepository.saveAll(authorships)
 
         val users = IntStream.rangeClosed(1, 100).mapToObj { it -> CorpUser(
             it.toLong(), faker.name().firstName(), faker.name().lastName(), faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username()) }.toList()

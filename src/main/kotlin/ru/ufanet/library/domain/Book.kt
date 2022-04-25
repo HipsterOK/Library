@@ -20,8 +20,8 @@ data class Book(
     open var quantity: Int? = 0,
     @OneToOne(fetch = FetchType.LAZY)
     open var genre: Genre,
-    @OneToOne(fetch = FetchType.LAZY)
-    open var author: Author,
+//    @OneToOne(fetch = FetchType.LAZY)
+//    open var authorship: Authorship,
     open var addDate: Date? = Date(),
     open var type: BookType? = BookType.PHYSICAL_BOOK,
     open var libId: Long?,
