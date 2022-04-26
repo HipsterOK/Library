@@ -8,7 +8,7 @@ import ru.ufanet.library.service.BookCopyService
 //@CrossOrigin(origins = ["http://localhost:8081", "http://localhost:8081/bookCopy", "/**"])
 @RestController()
 @RequestMapping("/bookCopy")
-class BookCopyCopyController(private val bookCopyService: BookCopyService) {
+class BookCopyController(private val bookCopyService: BookCopyService) {
 
     @GetMapping
     fun getBookCopys(): Iterable<BookCopy> {

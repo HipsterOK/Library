@@ -50,6 +50,10 @@ class SampleDataLoader(
             BookType.AUDIO_BOOK, "www") }.toList()
         bookRepository.saveAll(books)
 
+        val booksCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
+            it.toLong(), books[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
+        bookCopyRepository.saveAll(booksCopys)
+
         val authorships = IntStream.rangeClosed(1, 100).mapToObj { it -> Authorship(
             it.toLong(), books[it-1],  authors[it-1]) }.toList()
         authorshipRepository.saveAll(authorships)
@@ -69,10 +73,6 @@ class SampleDataLoader(
         val comments = IntStream.rangeClosed(1, 100).mapToObj { it -> Comment(
             it.toLong(), books[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
         commentRepository.saveAll(comments)
-
-        val booksCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
-            it.toLong(), books[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
-        bookCopyRepository.saveAll(booksCopys)
 
         val issuances = IntStream.rangeClosed(1, 100).mapToObj { it -> Issuance(
             it.toLong(), booksCopys[it-1],  users[it-1], true, faker.date().birthday(), faker.date().birthday()) }.toList()
