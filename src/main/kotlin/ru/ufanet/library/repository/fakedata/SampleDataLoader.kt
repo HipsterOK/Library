@@ -42,12 +42,12 @@ class SampleDataLoader(
         genreRepository.saveAll(genres)
 
         val libraryOffices =  IntStream.rangeClosed(1, 100).mapToObj { it -> LibraryOffice(
-            it.toLong(), faker.name().title(), faker.address().fullAddress()) }.toList()
+            it.toLong(), faker.name().title(),faker.address().city(), faker.address().secondaryAddress()) }.toList()
         libraryOfficeRepository.saveAll(libraryOffices)
 
         val books = IntStream.rangeClosed(1, 100).mapToObj { it -> Book(
-            it.toLong(), faker.book().title(),"descriptions!!!", random().toInt(), genres[it-1],
-             faker.date().birthday(), BookType.AUDIO_BOOK, libraryOffices[it-1], "www") }.toList()
+            it.toLong(), faker.book().title(),"descriptions!!!", genres[it-1],
+            BookType.AUDIO_BOOK, "www") }.toList()
         bookRepository.saveAll(books)
 
         val authorships = IntStream.rangeClosed(1, 100).mapToObj { it -> Authorship(
@@ -62,14 +62,6 @@ class SampleDataLoader(
             it.toLong(), books[it-1],  users[it-1]) }.toList()
         readBookRepository.saveAll(readBooks)
 
-        val reservations = IntStream.rangeClosed(1, 100).mapToObj { it -> Reservation(
-            it.toLong(), books[it-1],  users[it-1], faker.date().birthday()) }.toList()
-        reservationRepository.saveAll(reservations)
-
-        val issuances = IntStream.rangeClosed(1, 100).mapToObj { it -> Issuance(
-            it.toLong(), books[it-1],  users[it-1], faker.date().birthday(), faker.date().birthday(), 5, faker.hacker().abbreviation()) }.toList()
-        issuanceRepository.saveAll(issuances)
-
         val queues = IntStream.rangeClosed(1, 100).mapToObj { it -> Queue(
             it.toLong(),   users[it-1], books[it-1], faker.date().birthday(), it) }.toList()
         queueRepository.saveAll(queues)
@@ -78,8 +70,17 @@ class SampleDataLoader(
             it.toLong(), books[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
         commentRepository.saveAll(comments)
 
-        val bookCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
+        val booksCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
             it.toLong(), books[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
-        bookCopyRepository.saveAll(bookCopys)
+        bookCopyRepository.saveAll(booksCopys)
+
+        val issuances = IntStream.rangeClosed(1, 100).mapToObj { it -> Issuance(
+            it.toLong(), booksCopys[it-1],  users[it-1], true, faker.date().birthday(), faker.date().birthday()) }.toList()
+        issuanceRepository.saveAll(issuances)
+
+        val reservations = IntStream.rangeClosed(1, 100).mapToObj { it -> Reservation(
+            it.toLong(), booksCopys[it-1],  users[it-1], faker.date().birthday()) }.toList()
+        reservationRepository.saveAll(reservations)
+
     }
 }

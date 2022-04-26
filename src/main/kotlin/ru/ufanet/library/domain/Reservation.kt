@@ -11,7 +11,7 @@ data class Reservation(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @OneToOne(fetch = FetchType.LAZY)
-    val bookId: Book,
+    val bookCopy: BookCopy,
     @OneToOne(fetch = FetchType.LAZY)
     val userId: CorpUser,
     val endDate:Date

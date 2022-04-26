@@ -15,16 +15,10 @@ data class Book(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     open var id: Long? = 0,
-    open var title: String? = "тут ноль",
+    open var name: String? = "тут ноль",
     open var description: String? = "",
-    open var quantity: Int? = 0,
     @OneToOne(fetch = FetchType.LAZY)
     open var genre: Genre,
-//    @OneToOne(fetch = FetchType.LAZY)
-//    open var authorship: Authorship,
-    open var addDate: Date? = Date(),
     open var type: BookType? = BookType.PHYSICAL_BOOK,
-    @OneToOne(fetch = FetchType.LAZY)
-    open var libId: LibraryOffice,
-    open var src: String? =""
+    open var link: String? =""
 )

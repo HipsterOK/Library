@@ -11,12 +11,11 @@ data class Issuance(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @OneToOne(fetch = FetchType.LAZY)
-    val bookId: Book,
+    val bookCopy: BookCopy,
     @OneToOne(fetch = FetchType.LAZY)
-    val userId: CorpUser,
+    val user: CorpUser,
+    val isFinished: Boolean,
     val startDate:Date,
-    val endDate:Date,
-    val rating: Int,
-    val feedback: String
+    val endDate:Date
 )
 

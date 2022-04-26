@@ -11,6 +11,7 @@ data class LibraryOffice(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     val name: String = "",
+    val city: String,
     val adress: String
 
 )
