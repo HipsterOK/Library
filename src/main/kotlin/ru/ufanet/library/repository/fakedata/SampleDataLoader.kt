@@ -25,14 +25,16 @@ class SampleDataLoader(
     private val reservationRepository: ReservationRepository,
     private val issuanceRepository: IssuanceRepository,
     private val queueRepository: QueueRepository,
-    private val libraryOfficeRepository: LibraryOfficeRepository
+    private val libraryOfficeRepository: LibraryOfficeRepository,
+    private val commentRepository: CommentRepository,
+    private val bookCopyRepository: BookCopyRepository
 ): CommandLineRunner {
 
     var faker: Faker = Faker()
 
     override fun run(vararg args: String?) {
         val authors = IntStream.rangeClosed(1, 100).mapToObj { it -> Author(
-            it.toLong(), faker.name().lastName(), faker.name().firstName(), faker.name().title(), "") }.toList()
+            it.toLong(), faker.name().lastName(), faker.name().firstName(), faker.name().title()) }.toList()
         authorRepository.saveAll(authors)
 
         val genres =  IntStream.rangeClosed(1, 100).mapToObj { it -> Genre(
@@ -74,6 +76,10 @@ class SampleDataLoader(
 
         val comments = IntStream.rangeClosed(1, 100).mapToObj { it -> Comment(
             it.toLong(), books[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
-        queueRepository.saveAll(queues)
+        commentRepository.saveAll(comments)
+
+        val bookCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
+            it.toLong(), books[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
+        bookCopyRepository.saveAll(bookCopys)
     }
 }

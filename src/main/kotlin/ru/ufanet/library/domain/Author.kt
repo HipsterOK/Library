@@ -14,7 +14,6 @@ data class Author(
     val id: Long = 0,
     val surname: String = "",
     val name: String = "",
-    val patronymic: String = "",
-    val description: String = ""
+    val patronymic: String = ""
 )
 
