@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 import ru.ufanet.library.controller.GenreController
 import ru.ufanet.library.domain.*
 import ru.ufanet.library.domain.enum.BookType
+import ru.ufanet.library.domain.enum.Rating
 import ru.ufanet.library.domain.enum.UserRole
 import ru.ufanet.library.repository.*
 import ru.ufanet.library.service.GenreService
@@ -71,6 +72,8 @@ class SampleDataLoader(
             it.toLong(),   users[it-1], books[it-1], faker.date().birthday(), it) }.toList()
         queueRepository.saveAll(queues)
 
-
+        val comments = IntStream.rangeClosed(1, 100).mapToObj { it -> Comment(
+            it.toLong(), books[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
+        queueRepository.saveAll(queues)
     }
 }
