@@ -9,7 +9,9 @@ export default createStore({
         book: {},
         bookToOpen : {},
         bookToEdit: {},
-        showForm: false
+        showForm: false,
+        genres: [],
+        libs: []
     },
     mutations: {
         SET_BOOKS(state, books) {
@@ -18,6 +20,7 @@ export default createStore({
         CREATE_BOOK(state, book) {
             console.log('state: ' + book)
             state.books.push(book)
+            //axios.post(`/book`, this.book).then(r => console.log(r.statusText+'данные сохранены'))
         },
         DELETE_BOOK(state, id) {
             let index = state.books.findIndex(book => book.id == id);
@@ -31,6 +34,12 @@ export default createStore({
         },
         SET_BOOK_TO_OPEN(state, book) {
             state.bookToOpen = book
+        },
+        SET_GENRES(state, genres){
+            state.genres = genres
+        },
+        SET_LIBS(state, libs){
+            state.libs = libs
         }
     },
     actions: {
@@ -75,7 +84,21 @@ export default createStore({
         },
         setBookToOpen({commit}, book) {
             commit('SET_BOOK_TO_OPEN', book)
-        }
+        },
+        getGenres({ commit }) {
+            axios.get('/genre')
+                .then(response => {
+                    var genres = response.data.sort((a, b) => a.id - b.id)
+                    commit('SET_GENRES', genres)
+                })
+        },
+        getLibs({ commit }) {
+            axios.get('/libraryOffice')
+                .then(response => {
+                    var libs = response.data.sort((a, b) => a.id - b.id)
+                    commit('SET_LIBS', libs)
+                })
+        },
     },
     getters: {
         getBook: state => state.bookToOpen

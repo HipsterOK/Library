@@ -46,6 +46,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getBooks");
+    this.$store.dispatch("getGenres")
+    this.$store.dispatch("getLibs")
   },
 };
 </script>
