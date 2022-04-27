@@ -3,21 +3,16 @@ package ru.ufanet.library.repository.fakedata
 import com.github.javafaker.Faker
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
-import ru.ufanet.library.controller.GenreController
 import ru.ufanet.library.domain.*
-import ru.ufanet.library.domain.enum.BookType
 import ru.ufanet.library.domain.enum.Rating
 import ru.ufanet.library.domain.enum.UserRole
 import ru.ufanet.library.repository.*
-import ru.ufanet.library.service.GenreService
-import java.lang.Math.random
 import java.util.stream.IntStream
-import kotlin.streams.toList
 
 @Component
 class SampleDataLoader(
     private val authorRepository: AuthorRepository,
-    private val bookRepository: BookRepository,
+    private val paperBookRepository: PaperBookRepository,
     private val userRepository: UserRepository,
     private val genreRepository: GenreRepository,
     private val authorshipRepository: AuthorshipRepository,
@@ -27,7 +22,9 @@ class SampleDataLoader(
     private val queueRepository: QueueRepository,
     private val libraryOfficeRepository: LibraryOfficeRepository,
     private val commentRepository: CommentRepository,
-    private val bookCopyRepository: BookCopyRepository
+    private val bookCopyRepository: BookCopyRepository,
+    private val audioBookRepository: AudioBookRepository,
+    private val videoBookRepository: VideoBookRepository
 ): CommandLineRunner {
 
     var faker: Faker = Faker()
@@ -45,17 +42,28 @@ class SampleDataLoader(
             it.toLong(), faker.name().title(),faker.address().city(), faker.address().secondaryAddress()) }.toList()
         libraryOfficeRepository.saveAll(libraryOffices)
 
-        val books = IntStream.rangeClosed(1, 100).mapToObj { it -> Book(
+        val audiobooks = IntStream.rangeClosed(1, 100).mapToObj { it -> AudioBook(
             it.toLong(), faker.book().title(),"descriptions!!!", genres[it-1],
-            BookType.AUDIO_BOOK, "www") }.toList()
-        bookRepository.saveAll(books)
+            "www") }.toList()
+        audioBookRepository.saveAll(audiobooks)
 
-        val booksCopys = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
-            it.toLong(), books[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
-        bookCopyRepository.saveAll(booksCopys)
+        val paperBooks = IntStream.rangeClosed(1, 100).mapToObj { it -> PaperBook(
+            it.toLong(), faker.book().title(),"descriptions!!!", genres[it-1],
+            "www") }.toList()
+        paperBookRepository.saveAll(paperBooks)
+
+        val videobooks = IntStream.rangeClosed(1, 100).mapToObj { it -> VideoBook(
+            it.toLong(), faker.book().title(),"descriptions!!!", genres[it-1],
+            "www") }.toList()
+        videoBookRepository.saveAll(videobooks)
+
+
+        val bookCopies = IntStream.rangeClosed(1, 100).mapToObj { it -> BookCopy(
+            it.toLong(), paperBooks[it-1], faker.address().zipCode(), faker.date().birthday(), libraryOffices[it-1], true) }.toList()
+        bookCopyRepository.saveAll(bookCopies)
 
         val authorships = IntStream.rangeClosed(1, 100).mapToObj { it -> Authorship(
-            it.toLong(), books[it-1],  authors[it-1]) }.toList()
+            it.toLong(), paperBooks[it-1],  authors[it-1]) }.toList()
         authorshipRepository.saveAll(authorships)
 
         val users = IntStream.rangeClosed(1, 100).mapToObj { it -> CorpUser(
@@ -63,23 +71,23 @@ class SampleDataLoader(
         userRepository.saveAll(users)
 
         val readBooks = IntStream.rangeClosed(1, 100).mapToObj { it -> ReadBook(
-            it.toLong(), books[it-1],  users[it-1]) }.toList()
+            it.toLong(), paperBooks[it-1],  users[it-1]) }.toList()
         readBookRepository.saveAll(readBooks)
 
         val queues = IntStream.rangeClosed(1, 100).mapToObj { it -> Queue(
-            it.toLong(),   users[it-1], books[it-1], faker.date().birthday(), it) }.toList()
+            it.toLong(),   users[it-1], paperBooks[it-1], faker.date().birthday()) }.toList()
         queueRepository.saveAll(queues)
 
         val comments = IntStream.rangeClosed(1, 100).mapToObj { it -> Comment(
-            it.toLong(), books[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
+            it.toLong(), paperBooks[it-1], users[it-1], Rating.Good, faker.file().extension()) }.toList()
         commentRepository.saveAll(comments)
 
         val issuances = IntStream.rangeClosed(1, 100).mapToObj { it -> Issuance(
-            it.toLong(), booksCopys[it-1],  users[it-1], true, faker.date().birthday(), faker.date().birthday()) }.toList()
+            it.toLong(), bookCopies[it-1],  users[it-1], true, faker.date().birthday(), faker.date().birthday()) }.toList()
         issuanceRepository.saveAll(issuances)
 
         val reservations = IntStream.rangeClosed(1, 100).mapToObj { it -> Reservation(
-            it.toLong(), booksCopys[it-1],  users[it-1], faker.date().birthday()) }.toList()
+            it.toLong(), bookCopies[it-1],  users[it-1], faker.date().birthday()) }.toList()
         reservationRepository.saveAll(reservations)
 
     }

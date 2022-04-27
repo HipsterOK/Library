@@ -1,25 +1,20 @@
 package ru.ufanet.library.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import ru.ufanet.library.controller.GenreController
-import ru.ufanet.library.domain.enum.BookType
 import ru.ufanet.library.domain.enum.Rating
-import ru.ufanet.library.repository.GenreRepository
-import ru.ufanet.library.service.GenreService
-import java.text.SimpleDateFormat
-import java.util.Date
 import javax.persistence.*
 
 @Entity
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 data class Comment(
+    @Column(nullable = false, updatable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    open var id: Long? = 0,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long = 0,
     @OneToOne(fetch = FetchType.LAZY)
-    open var book: Book,
+     var paperBook: PaperBook,
     @OneToOne(fetch = FetchType.LAZY)
-    open var user: CorpUser,
-    open var rating: Rating,
-    open var feedback: String
+     var user: CorpUser,
+    var rating: Rating,
+    var feedback: String = ""
 )

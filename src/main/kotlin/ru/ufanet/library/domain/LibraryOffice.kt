@@ -7,12 +7,13 @@ import javax.persistence.*
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 
 data class LibraryOffice(
+    @Column(nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     val name: String = "",
-    val city: String,
-    val adress: String
+    val city: String = "",
+    val address: String = ""
 
 )
 

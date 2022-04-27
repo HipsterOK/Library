@@ -1,34 +1,33 @@
 package ru.ufanet.library.controller
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.web.bind.annotation.*
-import ru.ufanet.library.domain.Book
-import ru.ufanet.library.service.BookService
+import ru.ufanet.library.domain.PaperBook
+import ru.ufanet.library.service.PaperBookService
 
 //@CrossOrigin(origins = ["http://localhost:8081", "http://localhost:8081/book", "/**"])
 @RestController()
 @RequestMapping("/book")
-class BookController(private val bookService: BookService) {
+class PaperBookController(private val bookService: PaperBookService) {
 
     @GetMapping
-    fun getBooks(): Iterable<Book> {
+    fun getBooks(): Iterable<PaperBook> {
         return bookService.getAll()
     }
 
     @GetMapping("/{id}")
-    fun getBook(@PathVariable id: Long): Book {
+    fun getBook(@PathVariable id: Long): PaperBook {
         return bookService.getById(id)
     }
 
     @PostMapping
-    fun addBook(@RequestBody book: Book): Book {
-        return bookService.add(book)
+    fun addBook(@RequestBody paperBook: PaperBook): PaperBook {
+        return bookService.add(paperBook)
     }
 
     @PutMapping("/{id}")
-    fun editBook(@PathVariable id: Long, book: Book) : Book {
-        bookService.edit(id, book)
-        return book
+    fun editBook(@PathVariable id: Long, paperBook: PaperBook) : PaperBook {
+        bookService.edit(id, paperBook)
+        return paperBook
     }
 
     @DeleteMapping("/{id}")

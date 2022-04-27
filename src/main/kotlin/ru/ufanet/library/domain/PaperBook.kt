@@ -10,15 +10,17 @@ import java.util.Date
 import javax.persistence.*
 
 @Entity
+@DiscriminatorValue("PaperBook")
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
-data class Book(
+class PaperBook(
+    @Column(nullable = false, updatable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    open var id: Long? = 0,
-    open var name: String? = "тут ноль",
-    open var description: String? = "",
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    override var id: Long = 0,
+    override var name: String,
+    override var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
-    open var genre: Genre,
-    open var type: BookType? = BookType.PHYSICAL_BOOK,
-    open var link: String? =""
-)
+    override var genre: Genre,
+    override var link: String = ""):
+    AbstractBook()
+
