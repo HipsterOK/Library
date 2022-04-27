@@ -19,6 +19,11 @@ class PaperBookController(private val bookService: PaperBookService) {
         return bookService.getById(id)
     }
 
+    @GetMapping("/title/{title}")
+    fun getBookByTitle(@PathVariable title: String): Iterable<PaperBook> {
+        return bookService.getByTitle(title)
+    }
+
     @PostMapping
     fun addBook(@RequestBody paperBook: PaperBook): PaperBook {
         return bookService.add(paperBook)

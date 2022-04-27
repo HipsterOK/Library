@@ -14,7 +14,7 @@ abstract class AbstractBook (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
-    var name: String = "",
+    var title: String = "",
     var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
     var genre: Genre = Genre(),

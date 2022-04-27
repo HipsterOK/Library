@@ -16,6 +16,6 @@ data class BookCopy(
     var code: String = "",
     var date: Date = Date(),
     @OneToOne(fetch = FetchType.LAZY)
-     var lib: LibraryOffice,
+    var lib: LibraryOffice,
     var isFree: Boolean = true
 )

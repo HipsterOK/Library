@@ -3,11 +3,11 @@
     <form @submit.prevent class="form">
       <input v-model="book.title" type="text" placeholder="Название книги" />
       <input v-model="book.description" type="text" placeholder="Описание книги" />
-      <input v-model="book.quantity" type="number" placeholder="Количество" />
-      <input v-model="book.type" type="text" placeholder="Тип книги" />
+<!--      <input v-model="book.quantity" type="number" placeholder="Количество" />-->
+<!--      <input v-model="book.type" type="text" placeholder="Тип книги" />-->
       <input v-model=" book.genre.name" type="text" placeholder="Жанр" />
-      <input v-model=" book.addDate" type="text" placeholder="Дата добавления:" />
-      <input v-model="  book.libId.name " type="text" placeholder="Библиотека:" />
+<!--      <input v-model=" book.addDate" type="text" placeholder="Дата добавления:" />-->
+<!--      <input v-model="  book.libId.name " type="text" placeholder="Библиотека:" />-->
       <input v-model="  book.src " type="text" placeholder="Библиотека:" />
 
       <button @click="saveBook"> Сохранить </button>

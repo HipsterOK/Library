@@ -30,7 +30,7 @@ class SampleDataLoader(
     var faker: Faker = Faker()
 
     override fun run(vararg args: String?) {
-        val authors = IntStream.rangeClosed(1, 100).mapToObj { it -> Author(
+        /*val authors = IntStream.rangeClosed(1, 100).mapToObj { it -> Author(
             it.toLong(), faker.name().lastName(), faker.name().firstName(), faker.name().title()) }.toList()
         authorRepository.saveAll(authors)
 
@@ -67,7 +67,8 @@ class SampleDataLoader(
         authorshipRepository.saveAll(authorships)
 
         val users = IntStream.rangeClosed(1, 100).mapToObj { it -> CorpUser(
-            it.toLong(), faker.name().firstName(), faker.name().lastName(), faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username(), faker.name().nameWithMiddle()) }.toList()
+            it.toLong(), faker.name().firstName(), faker.name().lastName(),
+            faker.name().fullName(), UserRole.ADMIN, faker.name().name(), faker.name().username(), faker.name().nameWithMiddle()) }.toList()
         userRepository.saveAll(users)
 
         val readBooks = IntStream.rangeClosed(1, 100).mapToObj { it -> ReadBook(
@@ -88,7 +89,7 @@ class SampleDataLoader(
 
         val reservations = IntStream.rangeClosed(1, 100).mapToObj { it -> Reservation(
             it.toLong(), bookCopies[it-1],  users[it-1], faker.date().birthday()) }.toList()
-        reservationRepository.saveAll(reservations)
+        reservationRepository.saveAll(reservations)*/
 
     }
 }

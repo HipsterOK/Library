@@ -11,7 +11,7 @@ class VideoBook(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     override var id: Long = 0,
-    override var name: String,
+    override var title: String,
     override var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
     override var genre: Genre,

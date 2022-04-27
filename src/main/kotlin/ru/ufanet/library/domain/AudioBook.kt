@@ -14,7 +14,7 @@ class AudioBook(
     override var id: Long = 0,
 
     @NotNull
-    override var name: String,
+    override var title: String,
     override var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
     override var genre: Genre,

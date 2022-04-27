@@ -181,4 +181,6 @@ gradle-app.setting
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/7.4/checksums/checksums.lock
 src/main/resources/application.properties
-src/main/resources/application.properties
+build
+node_modules
+

@@ -11,4 +11,8 @@ class PaperBookService(private val paperBookRepository: PaperBookRepository) {
     fun add(paperBook: PaperBook): PaperBook = paperBookRepository.save(paperBook)
     fun edit(id: Long, paperBook: PaperBook): PaperBook = paperBookRepository.save(paperBook)
     fun remove(id: Long) = paperBookRepository.delete(paperBookRepository.getById(id))
+    fun getByTitle(title: String): Iterable<PaperBook> {
+        val allPaperBooks = getAll().filter { it.title.lowercase().contains(title.lowercase()) };
+        return  allPaperBooks;
+    }
 }
