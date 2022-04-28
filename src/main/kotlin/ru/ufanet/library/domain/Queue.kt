@@ -7,14 +7,14 @@ import javax.persistence.*
 @Entity
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 data class Queue(
+    @Column(nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @OneToOne(fetch = FetchType.LAZY)
     val userId: CorpUser,
     @OneToOne(fetch = FetchType.LAZY)
-    val bookId: Book,
+    val paperBookId: PaperBook,
     val startDate:Date,
-    val position: Int
 )
 

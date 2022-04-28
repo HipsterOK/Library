@@ -2,14 +2,12 @@ package ru.ufanet.library.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import ru.ufanet.library.domain.enum.UserRole
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 data class CorpUser(
+    @Column(nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

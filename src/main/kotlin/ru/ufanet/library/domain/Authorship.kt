@@ -6,12 +6,15 @@ import javax.persistence.*
 @Entity
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 data class Authorship(
+    @Column(nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
+
     @OneToOne(fetch = FetchType.LAZY)
-    val bookId: Book,
+    val paperBook: AbstractBook,
+
     @OneToOne(fetch = FetchType.LAZY)
-    val authorId: Author
+    val author: Author
 )
 

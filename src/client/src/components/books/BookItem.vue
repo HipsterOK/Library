@@ -4,12 +4,12 @@
     <strong> id: </strong> {{ book.id }}</div>
     <strong> Название: </strong> {{ book.title }}
     <strong> Описание: </strong> {{ book.description }}
-    <strong> Количество: </strong>{{ book.quantity }}
-    <strong> Тип книги: </strong> {{ book.type }}
+<!--&lt;!&ndash;    <strong> Количество: </strong>{{ book.quantity }}&ndash;&gt;-->
+<!--&lt;!&ndash;    <strong> Тип книги: </strong> {{ book.type }}&ndash;&gt;-->
     <strong> Жанр: </strong> {{ book.genre.name }}
-    <strong> Дата добавления: </strong> {{ book.addDate }}
-    <strong> Библиотека: </strong> {{ book.libId.name }}
-    <strong> Ссылка: </strong> {{ book.src}}
+<!--    <strong> Дата добавления: </strong> {{ book.addDate }}-->
+<!--    <strong> Библиотека: </strong> {{ book.libId.name }}-->
+<!--    <strong> Ссылка: </strong> {{ book.src}}-->
     <button 
       class="btn btn-primary" 
       @click="openBook(book)"
