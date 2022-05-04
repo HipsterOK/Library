@@ -13,7 +13,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/BooksView.vue')
   },
   {
-    path: '/book/:id',
+    path: '/bookCopy/:id',
     name: 'book',
     component: () => import(/* webpackChunkName: "about" */ '../views/SingleBookView.vue')
   },

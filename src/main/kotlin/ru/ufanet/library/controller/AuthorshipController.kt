@@ -9,9 +9,11 @@ import ru.ufanet.library.service.AuthorshipService
 class AuthorshipController(private val authorshipService: AuthorshipService) {
 
     @CrossOrigin(origins = ["http://localhost:8081"])
-    @GetMapping
-    fun getAuthorships(): Iterable<Authorship> {
-        return authorshipService.getAll()
+    @GetMapping()
+    @ResponseBody
+    fun getAuthorships(@RequestParam(defaultValue = "") bookID: String,
+                       @RequestParam(defaultValue = "") authorID: String): Iterable<Authorship> {
+        return authorshipService.getFilteredAuthorships(authorID, bookID)
     }
 
     @GetMapping("{id}")

@@ -2,6 +2,7 @@ package ru.ufanet.library.controller
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.web.bind.annotation.*
+import ru.ufanet.library.domain.Authorship
 import ru.ufanet.library.domain.BookCopy
 import ru.ufanet.library.service.BookCopyService
 
@@ -11,8 +12,9 @@ import ru.ufanet.library.service.BookCopyService
 class BookCopyController(private val bookCopyService: BookCopyService) {
 
     @GetMapping
-    fun getBookCopys(): Iterable<BookCopy> {
-        return bookCopyService.getAll()
+    fun getBookCopies(@RequestParam(defaultValue = "") title: String,
+                     @RequestParam(defaultValue = "") libId: String): Iterable<BookCopy> {
+        return bookCopyService.getFilteredBooks(title,libId)
     }
 
     @GetMapping("/{id}")

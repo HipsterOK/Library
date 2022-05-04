@@ -12,10 +12,10 @@ data class BookCopy(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      var id: Long = 0,
     @OneToOne(fetch = FetchType.LAZY)
-     var paperBook: PaperBook,
+    var paperBook: PaperBook,
     var code: String = "",
     var date: Date = Date(),
     @OneToOne(fetch = FetchType.LAZY)
     var lib: LibraryOffice,
-    var isFree: Boolean = true
+    var quantity: Long = 0
 )
