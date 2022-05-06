@@ -1,6 +1,7 @@
 package ru.ufanet.library.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import java.awt.print.Book
 import java.util.Date
 import javax.persistence.*
 
@@ -14,7 +15,7 @@ data class Queue(
     @OneToOne(fetch = FetchType.LAZY)
     val userId: CorpUser,
     @OneToOne(fetch = FetchType.LAZY)
-    val paperBookId: PaperBook,
+    val bookCopy: BookCopy,
     val startDate:Date,
 )
 

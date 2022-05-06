@@ -1,30 +1,34 @@
 <template>
     <div class="form-bg">
         <form @submit.prevent class="form">
-            <input v-model="book.title" type="text" placeholder="Название книги"/>
-          <textarea v-model="book.description" type="text" placeholder="Описание книги" />
-            <input v-model="book.quantity" type="number" placeholder="Количество"/>
-            <!--      <input v-model="book.type" type="text" placeholder="Тип книги" />-->
-            <select v-model="book.type">
-                <option value="AUDIO_BOOK">Аудио книга</option>
-                <option value="PHYSICAL_BOOK">Бумажная книга</option>
-                <option value="VIDEO_BOOK">Видеоматериалы</option>
-            </select>
-            <!--      <input v-model=" book.genre.name" type="text" placeholder="Жанр" />-->
-            <select v-model="book.genre">
-                <option v-for="genre in genres" :value="genre" :key="genre">
-                    {{ genre.name }}
-                </option>
-            </select>
-<!--            <input v-model=" book.addDate" type="text" placeholder="Дата добавления:"/>-->
-            <!--      <input v-model="  book.libId.name " type="text" placeholder="Библиотека:" />-->
-            <select v-model="book.libId">
+          <v-combobox v-for="paperBook in paperBooks" :value="paperBook" :key="paperBook"></v-combobox>
+          <input @input="onInput" v-model="copyBook.title" list="datalist_bookNames" type="text" placeholder="Название книги" id="input"/>
+          <datalist id="datalist_bookNames" >
+            <option v-for="paperBook in paperBooks" :value="paperBook" :key="paperBook">{{paperBook.title}}</option>
+          </datalist>
+
+          <textarea v-model="paperBooksToAdd" type="text" v-text="paperBooksToAdd.description" placeholder="Описание книги" />
+          <input v-model="copyBook.quantity" type="number" placeholder="Количество"/>
+
+          <select v-model="copyBook.type">
+            <option value="AUDIO_BOOK">Аудио книга</option>
+            <option value="PHYSICAL_BOOK">Бумажная книга</option>
+            <option value="VIDEO_BOOK">Видеоматериалы</option>
+          </select>
+
+          <input list="genres" name="myGenre" type="text" placeholder="Жанр" v-model="genre.name"/>
+          <datalist id="genres">
+            <option v-for="genre in genres" :key="genre">{{genre.name}}</option>
+          </datalist>
+          <button class="btn btn-success"  @click="saveGenre" >Сохранить</button>
+            <select v-model="copyBook.libId">
                 <option v-for="lib in libs" :value="lib" :key="lib"> {{ lib.name }} </option>
             </select>
-            <input v-model="  book.src " type="text" placeholder="Ссылка:"/>
+          <input v-model="  copyBook.src " type="text" placeholder="Ссылка:"/>
+
           <div v-for="(author, index) in authorLines" :key="index">
             <div class="flex justify-start ml-2 mt-2">
-              <select v-model="selected">
+              <select v-model="authorz">
                 <option
                     v-for="author in authors"
                     v-bind:key="author.id"
@@ -62,6 +66,7 @@
       mounted() {
         this.getAuthors()
         this.getAuthorshipByBookId(105)
+        this.$store.dispatch("getPaperBooks");
       },
       data(){
         return {
@@ -77,10 +82,12 @@
           authorLines: [{
           }],
           authorships: [{}],
+          paperBookToAdd: {},
+          chosenPaperBook: {}
         }
       },
         computed: {
-            book() {
+            copyBook() {
                 return this.$store.state.bookToEdit;
             },
             genres() {
@@ -88,9 +95,29 @@
             },
             libs() {
                 return this.$store.state.libs;
+            },
+            genre() {
+              return this.$store.state.genreToAdd;
+            },
+            paperBooks() {
+              return this.$store.state.paperBooks;
+            },
+            paperBooksToAdd() {
+              return this.$store.state.paperBookToAdd;
             }
         },
         methods: {
+           onInput(e) {
+             let val = e.target.value;
+             if (val) {
+               this.chosenPaperBook = val;
+               console.log(this.chosenPaperBook);
+             }
+          },
+          saveInstance(paperBook) {
+            console.log(paperBook)
+            this.chosenPaperBook = paperBook;
+          },
           getAuthors() {
             axios.get(`http://localhost:8080/author/`).then(response => {
               this.authors = response.data
@@ -103,11 +130,15 @@
               console.log(this.authorships)
             })
           },
+          saveGenre() {
+            // if (!this.genres.some(e => e.name === this.genre.name))
+            this.$store.dispatch("createGenre", this.genre)
+          },
             closeForm() {
                 this.$store.dispatch("switchForm", false)
             },
             saveBook() {
-                this.$store.dispatch("createBook", this.book)
+                this.$store.dispatch("createBook", this.copyBook)
                 this.$store.dispatch("switchForm", false)
             },
           addMore() {
