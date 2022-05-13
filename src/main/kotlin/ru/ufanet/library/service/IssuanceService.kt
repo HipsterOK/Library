@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import ru.ufanet.library.domain.Issuance
 import ru.ufanet.library.domain.utility.Debtor
 import ru.ufanet.library.repository.IssuanceRepository
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collector
@@ -18,10 +19,9 @@ class IssuanceService(private val issuanceRepository: IssuanceRepository) {
     fun remove(id: Long) = issuanceRepository.delete(issuanceRepository.getById(id))
     fun getAllDebtors(): List<Debtor> {
         val listDebtor: List<Debtor> = issuanceRepository.findAllDebtors().stream().map { t ->
-            Debtor(t[0], t[1], t[2],
-                    SimpleDateFormat("yyyy-MM-dd").parse(t[3]))
+            Debtor(t[0], t[1], t[2], t[3],
+                    SimpleDateFormat("dd.MM.yyyy").format(SimpleDateFormat("yyyy-MM-dd").parse(t[4])))
         }.toList()
-        //issuanceRepository.findAllDebtors().stream().forEach{t-> run { println(t[0]);println(t[1]);println(t[2]);println(t[3]) } }
         return listDebtor
     }
 }
