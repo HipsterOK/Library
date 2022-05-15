@@ -10,7 +10,7 @@ import java.util.Date
 import javax.persistence.*
 
 @Entity
-@DiscriminatorValue("PaperBook")
+@DiscriminatorValue("PHYSICAL_BOOK")
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 class PaperBook(
     @Column(nullable = false, updatable = false)

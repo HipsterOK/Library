@@ -5,7 +5,7 @@ import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 @Entity
-@DiscriminatorValue("AudioBook")
+@DiscriminatorValue("AUDIO_BOOK")
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 class AudioBook(
     @Column(nullable = false, updatable = false)
