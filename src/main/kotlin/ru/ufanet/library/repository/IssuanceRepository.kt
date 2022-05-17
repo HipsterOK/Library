@@ -18,4 +18,6 @@ interface IssuanceRepository: JpaRepository<Issuance, Long> {
                     "on bc.paper_book_id=bk.id where iss.end_date<NOW()) scnd " +
                 "on frst.id=scnd.id order by scnd.end_date asc", nativeQuery = true)
     fun findAllDebtors():List<List<String>>
+
+    fun findAllByUser(user: CorpUser):Iterable<Issuance>
 }

@@ -1,6 +1,7 @@
 package ru.ufanet.library.controller
 
 import org.springframework.web.bind.annotation.*
+import ru.ufanet.library.domain.CorpUser
 import ru.ufanet.library.domain.Issuance
 import ru.ufanet.library.domain.utility.Debtor
 import ru.ufanet.library.service.IssuanceService
@@ -39,5 +40,15 @@ class IssuanceController(private val issuanceService: IssuanceService) {
     @GetMapping("debtors")
     fun getAllDebtors(): List<Debtor> {
         return issuanceService.getAllDebtors()
+    }
+
+    @GetMapping("{user}")
+    fun getAllIssuanceByUser(@PathVariable user: CorpUser): Iterable<Issuance> {
+        return issuanceService.getAllByUser(user)
+    }
+
+    @PutMapping("extend/{id}")
+    fun extendIssuance(@PathVariable id: Long){
+        issuanceService.extendIssuanceById(id)
     }
 }
