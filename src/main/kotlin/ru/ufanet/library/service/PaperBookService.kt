@@ -1,7 +1,6 @@
 package ru.ufanet.library.service
 
 import org.springframework.stereotype.Service
-import ru.ufanet.library.domain.Authorship
 import ru.ufanet.library.domain.PaperBook
 import ru.ufanet.library.repository.PaperBookRepository
 
@@ -14,13 +13,7 @@ class PaperBookService(private val paperBookRepository: PaperBookRepository,
     fun edit(id: Long, paperBook: PaperBook): PaperBook = paperBookRepository.save(paperBook)
     fun remove(id: Long) = paperBookRepository.delete(paperBookRepository.getById(id))
     fun getByTitle(title: String): Iterable<PaperBook> {
-        val filteredBooks = getAll().filter { it.title.lowercase().contains(title.lowercase()) }
-        return  filteredBooks;
-    }
-    fun getByLibrary(id: Long): Iterable<PaperBook> {
-
-        var filteredBooks = bookCopyService.getByLibraryId(id)
-        return filteredBooks.map { it.paperBook }.distinct();
+        return getAll().filter { it.title.lowercase().contains(title.lowercase()) };
     }
 
 //    fun getFilteredAuthorships(title: String = "", lib_id: String = "") : Iterable<Authorship> {

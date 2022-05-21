@@ -6,4 +6,5 @@ import ru.ufanet.library.domain.BookCopy
 
 @Repository
 interface BookCopyRepository : JpaRepository<BookCopy, Long> {
+    fun getBookCopyByCode(code:String):BookCopy
 }

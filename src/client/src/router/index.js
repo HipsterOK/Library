@@ -41,7 +41,12 @@ const routes = [
     path: '/debtors',
     name: 'debtors',
     component: () => import(/* webpackChunkName: "about" */ '../views/DebtorsView.vue')
-  }
+  },
+  {
+    path: '/paperBook',
+    name: 'paperBook',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PaperBookForm.vue')
+  },
 ]
 
 const router = createRouter({

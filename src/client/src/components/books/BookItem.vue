@@ -16,13 +16,13 @@
     >
       Открыть
       </button>
-<!--    <button-->
-<!--      class="btn btn-secondary"-->
-<!--      style="margin-right: 10px"-->
-<!--      @click="editBook(book)"-->
-<!--    >-->
-<!--      Изм.-->
-<!--    </button>-->
+    <button
+      class="btn btn-secondary"
+      style="margin-right: 10px"
+      @click="editBook(book)"
+    >
+      Изм.
+    </button>
 <!--    <button class="btn btn-danger" @click="removeBook(book)">Удалить</button>-->
   </div>
 </template>
@@ -36,10 +36,10 @@ export default {
     },
   },
   methods: {
-    // editBook(book) {
-    //   this.$store.dispatch("setBook", book);
-    //   this.$store.dispatch("switchForm", true);
-    // },
+    editBook(book) {
+      this.$store.dispatch("setBook", book);
+      this.$store.dispatch("switchForm", true);
+    },
     // removeBook(book) {
     //   this.$store.dispatch("deleteBook", book.id);
     // },
