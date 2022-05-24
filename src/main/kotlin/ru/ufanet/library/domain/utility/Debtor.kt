@@ -5,8 +5,8 @@ import java.util.*
 
 data class Debtor(
         val userFullName: String,
-        //val userPhone: String,
+        val userPhone: String,
         val bookTitle: String,
         val bookAuthorFullName: String,
-        val deliveryDate: Date
+        val deliveryDate: String
 )

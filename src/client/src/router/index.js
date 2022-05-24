@@ -38,6 +38,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AuthorshipsView.vue')
   },
   {
+    path: '/issuance',
+    name: 'issuances',
+    component: () => import(/* webpackChunkName: "about" */ '../views/IssuancesView.vue')
+  },
+  {
     path: '/debtors',
     name: 'debtors',
     component: () => import(/* webpackChunkName: "about" */ '../views/DebtorsView.vue')
@@ -47,6 +52,11 @@ const routes = [
     name: 'paperBook',
     component: () => import(/* webpackChunkName: "about" */ '../views/PaperBookForm.vue')
   },
+  {
+    path: '/userBooks',
+    name: 'userBooks',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserBooksView.vue')
+  }
 ]
 
 const router = createRouter({

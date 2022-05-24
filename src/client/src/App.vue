@@ -6,7 +6,9 @@
     <router-link to="/user">Пользователи</router-link> |
     <router-link to="/genre">Жанры</router-link> |
     <router-link to="/authorship">Авторство</router-link> |
+    <router-link to="/issuance">Выдачи</router-link> |
     <router-link to="/debtors">Должники</router-link> |
+    <router-link to="/userBooks">Мои книги</router-link>
   </nav>
   <router-view/>
 </template>

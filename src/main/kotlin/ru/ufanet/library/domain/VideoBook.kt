@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
-@DiscriminatorValue("VideoBook")
+@DiscriminatorValue("VIDEO_BOOK")
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 class VideoBook(
     @Column(nullable = false, updatable = false)
