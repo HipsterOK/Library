@@ -23,6 +23,7 @@ export default {
   // },
   computed: {
     author() {
+      console.log(this.$store.state.authorToEdit)
       return this.$store.state.authorToEdit;
     },
   },
@@ -32,7 +33,7 @@ export default {
     },
     saveBookButton() {
       this.$store.dispatch("createAuthor", this.author)
-      this.$store.dispatch("getAuthors")
+      this.$store.dispatch("setAuthors", this.author)
       this.$store.dispatch("switchAuthorForm", false)
     },
   },

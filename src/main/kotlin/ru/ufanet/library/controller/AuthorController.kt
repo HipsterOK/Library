@@ -20,8 +20,8 @@ class AuthorController(private val authorService: AuthorService) {
     }
 
     @PostMapping
-    fun addAuthor(@RequestBody author: Author): Author {
-        return authorService.add(author)
+    fun addAuthor(@RequestBody author: Author) {
+        authorService.add(author)
     }
 
     @PutMapping("{id}")

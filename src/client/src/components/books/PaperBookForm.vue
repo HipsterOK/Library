@@ -44,7 +44,7 @@
         </button>
       </div>
     </div>
-    <button class="btn btn-success" @click="createAuthor">Создать автора</button>
+    <button class="btn btn-success" @click="createBook">Создать автора</button>
 
     <div class="flex justify-start ml-2 mt-2">
       <button class="btn btn-success" @click="savePaperBook">Сохранить книгу</button>
@@ -116,7 +116,7 @@ export default {
       console.log( this.localAuthorship)
       this.$store.dispatch("createAuthorship", this.localAuthorship);
     },
-    createAuthor() {
+    createBook() {
       this.$store.dispatch("switchAuthorForm", true);
       this.$store.dispatch("setAuthor", {})
     },

@@ -20,8 +20,8 @@ class CommentController(private val commentService: CommentService) {
     }
 
     @PostMapping
-    fun addComment(@RequestBody comment: Comment): Comment {
-        return commentService.add(comment)
+    fun addComment(@RequestBody comment: Comment) {
+        commentService.add(comment)
     }
 
     @PutMapping("{id}")
