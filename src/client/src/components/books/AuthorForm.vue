@@ -1,11 +1,12 @@
 <template>
   <div class="form-bg">
     <form @submit.prevent class="form">
-      <input v-if="copyBook.code==undefined" disabled type="text" placeholder="Книга еще не существует"/>
-      <input v-if="copyBook.code!=undefined" disabled v-model="copyBook.code" type="text" placeholder="Код"/>
+      <input v-model="author.surname" type="text" placeholder="Фамилия"/>
+      <input v-model="author.name" type="text" placeholder="Имя"/>
+      <input v-model="author.patronymic" type="text" placeholder="Отчество"/>
       <div class="flex justify-start ml-2 mt-2">
-        <button class="btn btn-success" @click="saveBookButton()">Подтвердить</button>
-        <button class="btn btn-danger" @click="closeForm()"> Отменить</button>
+        <button class="btn btn-success" @click="saveBookButton">Подтвердить</button>
+        <button class="btn btn-danger" @click="closeForm"> Отменить</button>
       </div>
     </form>
   </div>
@@ -14,35 +15,27 @@
 <script>
 
 export default {
-  mounted() {
-
-  },
-  data() {
-
-  },
+  // mounted() {
+  //
+  // },
+  // data() {
+  //
+  // },
   computed: {
     author() {
-      console.log(this.$store.state.bookToEdit)
-      return this.$store.state.bookToEdit;
+      console.log(this.$store.state.authorToEdit)
+      return this.$store.state.authorToEdit;
     },
   },
   methods: {
     closeForm() {
-      this.$store.dispatch("switchBookAcceptanceForm", false)
+      this.$store.dispatch("switchAuthorForm", false)
     },
     saveBookButton() {
-      if (this.copyBook.code =="" || this.copyBook.code==null) {
-        this.$store.dispatch("createBook", this.copyBook)
-      }
-      else {
-        this.$store.dispatch("switchBookAcceptanceForm", false)
-        this.$store.dispatch("switchForm", false)
-        this.$store.dispatch("createBook", this.copyBook)
-      }
+      this.$store.dispatch("createAuthor", this.author)
+      this.$store.dispatch("setAuthors", this.author)
+      this.$store.dispatch("switchAuthorForm", false)
     },
-    createBookButton(){
-      this.$store.dispatch("createBook", this.copyBook)
-    }
   },
 
 }

@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 @JsonIgnoreProperties(value = ["hibernateLazyInitializer", "handler"])
 data class Authorship(
-    @Column(nullable = false, updatable = false)
+    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

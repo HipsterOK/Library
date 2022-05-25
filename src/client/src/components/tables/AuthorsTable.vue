@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8080/author/`).then(response => {
+    axios.get(`/author`).then(response => {
       this.authors = response.data
     })
   }

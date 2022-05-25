@@ -18,7 +18,7 @@
             <input disabled v-if="copyBook.paperBook!=undefined" v-model="copyBook.paperBook.title" type="text" placeholder="Название книги"/>
             <textarea disabled  v-if="copyBook.paperBook!=undefined"
                       v-model="copyBook.paperBook.description" type="text" placeholder="Описание книги"/>
-            <input disabled v-if="copyBook.paperBook!=undefined" v-model="copyBook.paperBook.genre" placeholder="Количество"/>
+            <input disabled v-if="copyBook.paperBook!=undefined" v-model="copyBook.paperBook.genre.name" placeholder="Жанр"/>
             <input disabled  v-if="copyBook.paperBook!=undefined" v-model="copyBook.paperBook.link" type="text" placeholder="Ссылка книги"/>
 
 
@@ -37,8 +37,11 @@
         <button class="btn btn-success" @click="saveBookButton(copyBook)"> Сохранить</button>
         <button class="btn btn-danger" @click="closeForm"> Отменить</button>
       </div>
-      <div v-if="dialogVisible">
-        <book-acceptance-form @closeForm="closeAcceptanceForm" />
+      <div v-if="dialogVisibleAcceptance">
+        <book-acceptance-form/>
+      </div>
+      <div v-if="dialogVisiblePaperBook">
+        <paper-book-form/>
       </div>
     </form>
   </div>
@@ -46,26 +49,24 @@
 
 <script>
 import BookAcceptanceForm from "@/components/books/BookAcceptanceForm";
+import PaperBookForm from "@/components/books/PaperBookForm";
 export default {
   mounted() {
     this.$store.dispatch("getPaperBooks");
   },
-  data() {
-    return {
-      formSwitch: false,
-      flag: false
-    }
-  },
   components: {
+    PaperBookForm,
     BookAcceptanceForm,
   },
   computed: {
     copyBook() {
-      console.log(this.$store.state.bookToEdit)
       return this.$store.state.bookToEdit;
     },
-    dialogVisible() {
+    dialogVisibleAcceptance() {
       return this.$store.state.showBookAcceptanceForm
+    },
+    dialogVisiblePaperBook(){
+      return this.$store.state.showPaperBookForm
     },
     genres() {
       return this.$store.state.genres;
@@ -85,18 +86,12 @@ export default {
   },
   methods: {
     selectChange(value) {
-      console.log(value)
-      this.flag = true
-    },
-    closeAcceptanceForm() {
-      this.dialogVisibility();
-    },
-    dialogVisibility() {
-      this.dialogVisibleToggle = !this.dialogVisible;
+      this.$store.dispatch("setPaperBook", value)
     },
     createNewBook(paperBook) {
       this.$store.dispatch('setPaperBook', paperBook)
-      this.$router.push('paperBook')
+      // this.$router.push('paperBook')
+      this.$store.dispatch("switchPaperBookForm", true)
     },
     saveGenre() {
       this.$store.dispatch("createGenre", this.genre)
@@ -108,7 +103,6 @@ export default {
       // if (this.copyBook.code == null || this.copyBook.code == "") {
       //   this.$store.dispatch("createBook", this.copyBook)
       // }
-      this.dialogVisibleToggle = this.dialogVisible;
       this.$store.dispatch("switchBookAcceptanceForm", true)
       //this.$store.dispatch("switchForm", false)
       //this.$store.dispatch("createBook", this.copyBook)

@@ -2,13 +2,15 @@ package ru.ufanet.library.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.ufanet.library.domain.Authorship
+import ru.ufanet.library.domain.PaperBook
 import ru.ufanet.library.service.AuthorshipService
+import ru.ufanet.library.service.PaperBookService
 
 @RestController
 @RequestMapping("/authorship")
-class AuthorshipController(private val authorshipService: AuthorshipService) {
+class AuthorshipController(private val authorshipService: AuthorshipService, private val paperBookService: PaperBookService) {
 
-    @CrossOrigin(origins = ["http://localhost:8081"])
+//    @CrossOrigin(origins = ["http://localhost:8081"])
     @GetMapping()
     @ResponseBody
     fun getAuthorships(@RequestParam(defaultValue = "") bookID: String,
@@ -22,8 +24,10 @@ class AuthorshipController(private val authorshipService: AuthorshipService) {
     }
 
     @PostMapping
-    fun addAuthorship(@RequestBody authorship: Authorship) {
-        authorshipService.add(authorship)
+    fun addAuthorship(@RequestBody authorship: Authorship): Authorship {
+        //val local = Authorship(0, paperBookService.getById(1), authorship.author)
+        println(authorship)
+        return authorshipService.add(authorship)
     }
 
     @PutMapping("{id}")

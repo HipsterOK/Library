@@ -78,7 +78,7 @@ class SampleDataLoader(
 //        readBookRepository.saveAll(readBooks)
 //
 //        val queues = IntStream.rangeClosed(1, 100).mapToObj { it -> Queue(
-//            it.toLong(),   users[it-1], paperBooks[it-1], faker.date().birthday()) }.toList()
+//            it.toLong(),   users[it-1], bookCopies[it-1], faker.date().birthday()) }.toList()
 //        queueRepository.saveAll(queues)
 //
 //        val comments = IntStream.rangeClosed(1, 100).mapToObj { it -> Comment(

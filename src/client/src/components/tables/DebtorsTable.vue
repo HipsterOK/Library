@@ -33,7 +33,7 @@
             }
         },
         created() {
-            axios.get(`http://localhost:8081/issuance/debtors`).then(response => {
+            axios.get(`/issuance/debtors`).then(response => {
                 this.debtors = response.data
             })
         }

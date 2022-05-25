@@ -1,3 +1,6 @@
+#server:
+#  servlet:
+#    contextPath: /api
 bot:
   name: TtttessstttinggBot
   token: 1240921376:AAG2hRplSf9Cf20kFTq5AtTPF5GSUG_IRr8

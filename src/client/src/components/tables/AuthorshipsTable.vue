@@ -13,8 +13,8 @@
       <tbody>
       <tr v-for="authorship of authorships" :key="authorship">
         <td>{{ authorship.id }}</td>
-        <td>{{ authorship.bookId.title }}</td>
-        <td>{{ authorship.authorId.name }}</td>
+        <td>{{ authorship.book.title }}</td>
+        <td>{{ authorship.author.name }}</td>
         <td>
           <button class="btn btn-secondary" style="margin-right:10px;" @click="editAuthorship(authorship)">Изм.</button>
           <button class="btn btn-danger" @click="removeAuthorship(authorship)">Удалить</button>
@@ -43,7 +43,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8080/authorship/`).then(response => {
+    axios.get(`/authorship`).then(response => {
       this.authorships = response.data
     })
   }

@@ -45,7 +45,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8080/user/`).then(response => {
+    axios.get(`/user`).then(response => {
       this.users = response.data
     }).catch(e => {
       this.errors.push(e)

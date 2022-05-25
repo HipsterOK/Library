@@ -34,7 +34,7 @@
             }
         },
         created() {
-            axios.get(`http://localhost:8081/issuance`).then(response => {
+            axios.get(`/issuance`).then(response => {
                 this.issuances = response.data;
             })
 

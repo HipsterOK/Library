@@ -1,7 +1,7 @@
 import axios from "axios";
 import {createStore} from "vuex";
 
-var url = 'http://localhost:8081/bookCopy'
+axios.defaults.baseURL = '/api'
 
 export default createStore({
     state: {
@@ -10,43 +10,39 @@ export default createStore({
         bookToOpen: {},
         bookToEdit: {},
         showForm: false,
+        showBookAcceptanceForm: false,
+        showAuthorForm: false,
+        showPaperBookForm: false,
         genres: [],
         libs: [],
+        authors: [],
         genreToAdd: {},
         paperBooks: [],
-        paperBookToAdd: {},
         paperBookToEdit: {},
-        showBookAcceptanceForm: false,
-        authorToEdit: {}
-
+        authorToEdit: {},
+        authorshipToEdit: {},
     },
     mutations: {
         SET_BOOKS(state, books) {
             state.books = books
         },
         SET_PAPER_BOOKS(state, paperBooks) {
-            //state.paperBookToEdit = paperBooks[0]
-            //console.log(state.paperBookToEdit)
             state.paperBooks = paperBooks
         },
         CREATE_BOOK(state, book) {
-            // console.log('state: ' + book)
             state.bookToEdit = book
-            console.log('createBook' + book)
             state.books.push(book)
             //axios.post(`/book`, this.book).then(r => console.log(r.statusText+'данные сохранены'))
         },
         CREATE_GENRE(state, genre) {
-            console.log('state: ' + genre)
             state.genreToAdd = genre
             state.genres.push(genre)
             //axios.post(`/book`, this.book).then(r => console.log(r.statusText+'данные сохранены'))
         },
         CREATE_PAPER_BOOK(state, paperBook) {
-            console.log('paper book state: ' + paperBook.id)
+            console.log(paperBook)
             state.paperBookToEdit = paperBook
             state.paperBooks.push(paperBook)
-            state.paperBookToAdd = paperBook
             //axios.post(`/book`, this.book).then(r => console.log(r.statusText+'данные сохранены'))
         },
         // DELETE_BOOK(state, id) {
@@ -58,6 +54,9 @@ export default createStore({
         },
         SWITCH_FORM(state, Boolean) {
             state.showForm = Boolean
+        },
+        SWITCH_AUTHOR_FORM(state, Boolean) {
+            state.showAuthorForm = Boolean
         },
         SET_BOOK_TO_OPEN(state, book) {
             state.bookToOpen = book
@@ -74,23 +73,34 @@ export default createStore({
         SWITCH_BOOK_ACCEPTANCE_FORM(state, Boolean) {
             state.showBookAcceptanceForm = Boolean
         },
-        SET_AUTHOR(state, author) {
+        SWITCH_PAPER_BOOK_FORM(state, Boolean) {
+            state.showPaperBookForm = Boolean
+        },
+        CREATE_AUTHOR(state, author) {
             state.authorToEdit = author
-        }
+        },
+        SET_AUTHOR_TO_ADD(state, author) {
+            state.authorToEdit = author
+        },
+        CREATE_AUTHORSHIP(state, authorship) {
+             state.authorshipToEdit = authorship
+        },
+        SET_AUTHORS(state, authors) {
+            state.authors = authors
+        },
     },
     actions: {
         getBooks({commit}, title = "") {
-            axios.get(url, {params: {title: title.title, libId: title.libId}})
+            axios.get('/bookCopy', {params: {title: title.title, libId: title.libId}})
                 .then(response => {
                     var books = response.data.sort((a, b) => a.id - b.id)
                     commit('SET_BOOKS', books)
                 })
         },
         createBook({commit}, book) {
-            axios.post(url, book)
+            axios.post('/bookCopy', book)
                 .then(response => {
                     if (response.status == '200') {
-                        console.log(book.quantity)
                         console.log(response.data)
                         console.log(response.status)
                         commit('CREATE_BOOK', response.data)
@@ -99,9 +109,23 @@ export default createStore({
                 .catch(error => {
                     console.log(error)
                 })
+
+        },
+        createAuthorship({commit}, authorship) {
+            axios.post('/authorship', authorship)
+                .then(response => {
+                    if (response.status == '200') {
+                        console.log(response.data)
+                        console.log(response.status)
+                        commit('CREATE_AUTHORSHIP', response.data)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         createGenre({commit}, genre) {
-            axios.post('http://localhost:8081/genre', genre)
+            axios.post('/genre', genre)
                 .then(response => {
                     if (response.status == '200') {
                         console.log(response.data)
@@ -114,12 +138,25 @@ export default createStore({
                 })
         },
         createPaperBook({commit}, paperBook) {
-            axios.post('http://localhost:8081/paperBook', paperBook)
+            axios.post('/paperBook', paperBook)
                 .then(response => {
                     if (response.status == '200') {
                         console.log(response.data)
                         console.log(response.status)
                         commit('CREATE_PAPER_BOOK', response.data)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        createAuthor({commit}, author) {
+            axios.post('/author', author)
+                .then(response => {
+                    if (response.status == '200') {
+                        console.log(response.data)
+                        console.log(response.status)
+                        commit('CREATE_AUTHOR', response.data)
                     }
                 })
                 .catch(error => {
@@ -137,10 +174,10 @@ export default createStore({
         //     }
         // },
         setBook({commit}, bookToEdit) {
-            if (bookToEdit.id > 0) {
-                console.log('id bolshe 0')
-            }
             commit('SET_BOOK_TO_EDIT', bookToEdit)
+        },
+        setAuthor({commit}, author) {
+            commit('SET_AUTHOR_TO_ADD', author)
         },
         setPaperBook({commit}, paperBookToEdit) {
             commit('SET_PAPER_BOOK_TO_EDIT', paperBookToEdit)
@@ -151,6 +188,12 @@ export default createStore({
         switchBookAcceptanceForm({commit}, Boolean) {
             commit('SWITCH_BOOK_ACCEPTANCE_FORM', Boolean)
         },
+        switchPaperBookForm({commit}, Boolean) {
+            commit('SWITCH_PAPER_BOOK_FORM', Boolean)
+        },
+        switchAuthorForm({commit}, Boolean) {
+            commit('SWITCH_AUTHOR_FORM', Boolean)
+        },
         setBookToOpen({commit}, book) {
             commit('SET_BOOK_TO_OPEN', book)
         },
@@ -159,7 +202,9 @@ export default createStore({
                 .then(response => {
                     var genres = response.data.sort((a, b) => a.id - b.id)
                     commit('SET_GENRES', genres)
-                })
+                }).catch(error => {
+                console.log(error)
+            })
         },
         getPaperBooks({commit}) {
             axios.get('/paperBook')
@@ -169,17 +214,29 @@ export default createStore({
                         if(a.title > b.title) { return 1; }
                         return 0;
                     })
-                    //  console.log(paperBooks)
                     commit('SET_PAPER_BOOKS', paperBooks)
-                })
+                }).catch(error => {
+                console.log(error)
+            })
         },
         getLibs({commit}) {
             axios.get('/libraryOffice')
                 .then(response => {
                     var libs = response.data.sort((a, b) => a.id - b.id)
                     commit('SET_LIBS', libs)
-                })
+                }).catch(error => {
+                console.log(error)
+            })
         },
+        getAuthors({commit}) {
+            axios.get(`/author`).then(response => {
+                var authors = response.data.sort((a, b) => a.id - b.id)
+                commit('SET_AUTHORS', authors)
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+
     },
     getters: {
         getBook: state => state.bookToOpen

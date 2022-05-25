@@ -41,7 +41,7 @@
                 var dateIssuance = new Date(issuance.endDate);
                 var dateNow = new Date();
                 if ((dateNow.getMonth() - dateIssuance.getMonth()) > 0 && (dateNow.getMonth() - dateIssuance.getMonth()) < 4 && (dateNow.getFullYear() - dateIssuance.getFullYear()) === 0) {
-                    axios.put(`http://localhost:8081/issuance/extend/${issuance.id}`)
+                    axios.put(`/issuance/extend/${issuance.id}`)
                         .then(r => console.log(r.statusText + 'данные сохранены'))
                     location.reload()
                 } else {
@@ -51,8 +51,8 @@
         },
         created() {
             //todo брать пользователь из текущей сессии
-            var currentUser = axios.get(`http://localhost:8081/user`, {params: {id: 1}})
-            axios.get(`http://localhost:8081/issuance`, {params: {user: currentUser}}).then(response => {
+            var currentUser = axios.get(`/user`, {params: {id: 1}})
+            axios.get(`/issuance`, {params: {user: currentUser}}).then(response => {
                 this.userBooks = response.data
             })
         }

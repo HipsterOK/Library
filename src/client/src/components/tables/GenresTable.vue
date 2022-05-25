@@ -42,7 +42,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8080/genre/`).then(response => {
+    axios.get(`/genre/`).then(response => {
       this.genres = response.data
     }).catch(e => {
       this.errors.push(e)
