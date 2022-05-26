@@ -22,6 +22,7 @@ class PaperBook(
     @OneToOne(fetch = FetchType.LAZY)
     override var genre: Genre,
     override var link: String = "",
+    var type: String = "physical"
     ):
-    AbstractBook()
+    AbstractBook(id, title,description,genre,link)
 

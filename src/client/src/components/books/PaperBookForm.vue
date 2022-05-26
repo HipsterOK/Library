@@ -5,11 +5,11 @@
     <textarea v-model="localBook.description" type="text" placeholder="Описание книги"/>
     <input v-model="localBook.link" type="text" placeholder="Ссылка книги"/>
 
-    <!--        <select v-model="copyBook.type">&ndash;&gt;-->
-    <!--          <option value="AUDIO_BOOK">Аудио книга</option>-->
-    <!--          <option value="PHYSICAL_BOOK">Бумажная книга</option>-->
-    <!--          <option value="VIDEO_BOOK">Видеоматериалы</option>-->
-    <!--        </select>-->
+            <select v-model="localBook.type">
+              <option  value="physical">Бумажная книга</option>
+              <option value="audio">Аудио книга</option>
+              <option value="video">Видеоматериалы</option>
+            </select>
     <div class="flex justify-start ml-2 mt-2">
       <input list="genres" name="myGenre" type="text" placeholder="Жанр" @focusout="saveGenre"
              v-model="localGenre.name"/>
@@ -51,7 +51,7 @@
       <button class="btn btn-danger" @click="closeForm">Отменить</button>
     </div>
     <div class="flex justify-start ml-2 mt-2">
-      <button disabled class="btn btn-success" @click="saveAuthorships">Сохранить авторство</button>
+      <button :disabled="paperBook.id == undefined" class="btn btn-success" @click="saveAuthorships">Сохранить авторство</button>
 
     </div>
     <div v-if="dialogVisible">
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import AuthorForm from "@/components/books/AuthorForm";
 
 export default {
@@ -72,6 +73,9 @@ export default {
     this.localBook = this.paperBook
     this.localGenre = this.paperBook.genre
     this.saveGenre();
+    if (this.paperBook.id != undefined)
+        this.getAuthorshipByBookId(this.paperBook.id)
+    this.localBook.type = "physical"
   },
   data() {
     return {
@@ -80,6 +84,7 @@ export default {
       authorships: [{}],
       localGenre: {},
       localAuthorship: {},
+      bookType: {},
     }
   },
   components: {
@@ -103,17 +108,30 @@ export default {
     }
   },
   methods: {
+    getAuthorshipByBookId(bookId){
+      axios.get('/authorship', {params: {bookID: bookId}})
+          .then(response => {
+            this.authorLines = response.data
+          })
+    },
+    deleteAuthorshipByBook(id) {
+      try {
+        axios.delete('/authorship/book/' + id)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     saveAuthorships() {
+      this.deleteAuthorshipByBook(this.paperBook.id)
       for (var a=0;a < this.authorLines.length; a++){
         this.saveAuthorship(this.authorLines[a].author)
       }
     },
     saveAuthorship(author) {
-      console.log("saveAuthorship: " + this.paperBook.id)
-      console.log("saveAuthorship: " + author.id)
-      this.localAuthorship.paperBook = this.paperBook;
-      this.localAuthorship.author = author;
-      console.log( this.localAuthorship)
+      this.localAuthorship.book = this.paperBook;
+      this.localAuthorship.book.type = this.localBook.type
+      //this.localAuthorship.book.type = "physical"
+      this.localAuthorship.author = author
       this.$store.dispatch("createAuthorship", this.localAuthorship);
     },
     createAuthor() {
@@ -127,8 +145,6 @@ export default {
     saveButton() {
       this.savePaperBook();
       // this.saveAuthorships();
-      this.dialogVisibleToggle = this.dialogVisible;
-      this.$router.push('book')
     },
     saveGenre() {
       // if (!this.genres.some(e => e.name === this.genre.name))

@@ -21,6 +21,8 @@ export default createStore({
         paperBookToEdit: {},
         authorToEdit: {},
         authorshipToEdit: {},
+        allBooks: {},
+        abstractBook:{}
     },
     mutations: {
         SET_BOOKS(state, books) {
@@ -88,6 +90,12 @@ export default createStore({
         SET_AUTHORS(state, authors) {
             state.authors = authors
         },
+        SET_ALL_BOOKS(state, books) {
+            state.allBooks = books
+        },
+        CREATE_ABSTRACT_BOOK(state, book) {
+            state.abstractBook = book
+        },
     },
     actions: {
         getBooks({commit}, title = "") {
@@ -144,6 +152,19 @@ export default createStore({
                         console.log(response.data)
                         console.log(response.status)
                         commit('CREATE_PAPER_BOOK', response.data)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        createAbstractBook({commit}, book) {
+            axios.post('/book', book)
+                .then(response => {
+                    if (response.status == '200') {
+                        console.log(response.data)
+                        console.log(response.status)
+                        commit('CREATE_ABSTRACT_BOOK', response.data)
                     }
                 })
                 .catch(error => {
@@ -232,6 +253,14 @@ export default createStore({
             axios.get(`/author`).then(response => {
                 var authors = response.data.sort((a, b) => a.id - b.id)
                 commit('SET_AUTHORS', authors)
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        getAllBooks({commit}) {
+            axios.get(`/books`).then(response => {
+                var authors = response.data.sort((a, b) => a.id - b.id)
+                commit('SET_ALL_BOOKS', authors)
             }).catch(error => {
                 console.log(error)
             })

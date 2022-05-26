@@ -1,5 +1,6 @@
 package ru.ufanet.library.controller
 
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import ru.ufanet.library.domain.Authorship
 import ru.ufanet.library.domain.PaperBook
@@ -8,7 +9,7 @@ import ru.ufanet.library.service.PaperBookService
 
 @RestController
 @RequestMapping("/authorship")
-class AuthorshipController(private val authorshipService: AuthorshipService, private val paperBookService: PaperBookService) {
+class AuthorshipController(private val authorshipService: AuthorshipService) {
 
 //    @CrossOrigin(origins = ["http://localhost:8081"])
     @GetMapping()
@@ -25,8 +26,6 @@ class AuthorshipController(private val authorshipService: AuthorshipService, pri
 
     @PostMapping
     fun addAuthorship(@RequestBody authorship: Authorship): Authorship {
-        //val local = Authorship(0, paperBookService.getById(1), authorship.author)
-        println(authorship)
         return authorshipService.add(authorship)
     }
 
@@ -39,4 +38,15 @@ class AuthorshipController(private val authorshipService: AuthorshipService, pri
     fun deleteAuthorship(@PathVariable id: Long) {
         authorshipService.remove(id)
     }
+    @Transactional
+    @DeleteMapping("/book/{id}")
+    fun deleteAuthorshipByBookId(@PathVariable id: Long) {
+        authorshipService.deleteByBookId(id)
+    }
+
+//    @GetMapping
+//    fun getAuthorshipByBookId(@RequestParam(defaultValue = "") id: String): Iterable<Authorship>{
+//        println(id)
+//       return authorshipService.getByBookId(id.toLong());
+//    }
 }

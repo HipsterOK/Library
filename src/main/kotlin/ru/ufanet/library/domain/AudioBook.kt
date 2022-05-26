@@ -18,5 +18,6 @@ class AudioBook(
     override var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
     override var genre: Genre,
-    override var link: String = ""):
-AbstractBook()
+    override var link: String = "",
+    var type: String = "audio"):
+    AbstractBook(id, title,description,genre,link)

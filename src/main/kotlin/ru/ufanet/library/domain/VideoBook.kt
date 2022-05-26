@@ -15,5 +15,6 @@ class VideoBook(
     override var description: String = "",
     @OneToOne(fetch = FetchType.LAZY)
     override var genre: Genre,
-    override var link: String = ""):
-    AbstractBook()
+    override var link: String = "",
+    var type: String = "video"):
+    AbstractBook(id, title,description,genre,link)

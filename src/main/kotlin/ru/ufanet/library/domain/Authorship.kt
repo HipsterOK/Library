@@ -12,7 +12,7 @@ data class Authorship(
     val id: Long = 0,
 
     @OneToOne(fetch = FetchType.LAZY)
-    val paperBook: AbstractBook,
+    val book: AbstractBook,
 
     @OneToOne(fetch = FetchType.LAZY)
     val author: Author
